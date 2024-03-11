@@ -29,7 +29,7 @@ const Page = () => {
         }
         const data = await res.json();
         setUserData(data.results);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
       }
     };
@@ -37,7 +37,7 @@ const Page = () => {
     fetchData();
   }, []);
 
-  const handleUserClick = (user) => {
+  const handleUserClick = (user: any) => {
     setSelectedUser(user);
     setIsModalOpen(true);
   };
@@ -56,7 +56,7 @@ const Page = () => {
 
   return (
     <main>
-      {userData.map((user, index) => (
+      {userData.map((user: any, index: number) => (
         <div key={index} onClick={() => handleUserClick(user)} style={{ cursor: 'pointer', marginBottom: '20px', paddingTop: '20px', borderBottom: '1px solid #eee', paddingLeft: '20px' }}> 
           <h2 style={{ fontSize: '24px' }}>{`${user.name.title} ${user.name.first} ${user.name.last}`}</h2>
           <img src={user.picture.large} alt="User" />
@@ -67,11 +67,13 @@ const Page = () => {
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {selectedUser && (
           <div>
-            <h2 style={{ fontSize: '24px' }}>{`${selectedUser.name.title} ${selectedUser.name.first} ${selectedUser.name.last}`}</h2>
-            <img src={selectedUser.picture.large} alt="User" />
+            <h2 style={{ fontSize: '24px' }}>{`${selectedUser.name?.title} ${selectedUser.name?.first} ${selectedUser.name?.last}`}</h2>
+            <img src={selectedUser.picture?.large} alt="User" />
             <p>Email: {selectedUser.email}</p>
             <p>Phone: {selectedUser.phone}</p>
-            <p>Location: {`${selectedUser.location.city}, ${selectedUser.location.state}, ${selectedUser.location.country}`}</p>
+            {selectedUser.location && (
+              <p>Location: {`${selectedUser.location.city}, ${selectedUser.location.state}, ${selectedUser.location.country}`}</p>
+            )}
           </div>
         )}
       </Modal>
