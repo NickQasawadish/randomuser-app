@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, children }: { isOpen: boolean, onClose: () => void, children: React.ReactNode }) => {
   if (!isOpen) return null;
 
   return (
